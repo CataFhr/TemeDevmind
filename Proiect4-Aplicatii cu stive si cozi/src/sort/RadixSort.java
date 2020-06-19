@@ -13,8 +13,8 @@ public class RadixSort {
 		for (int queueNo = 0; queueNo < 10; queueNo++) {
 			queueList.add(new LinkedList<>());
 		}
-		int max = getMax(arr);
-		int maxDigitsNo = countDigits(max);
+		int max = RadixSort.getMax(arr);
+		int maxDigitsNo = RadixSort.countDigits(max);
 		int factor = 1;
 
 		for (int k = 0; k < maxDigitsNo; k++) {
