@@ -1,0 +1,5 @@
+Cel mai lung cuvant este: a
+Cel mai scurt cuvant este: a
+Primul cuvant in ordine alfabetica: a
+Ultimul cuvant in ordine alfabetica: a
+Numarul total de cuvinte este: 1
