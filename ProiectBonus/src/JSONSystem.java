@@ -11,7 +11,7 @@ public class JSONSystem {
 
     public static void main(String[] args) {
 
-        System.out.println("Enter the names of the 3 files (JSON file, input file, result file)");
+        System.out.println("Enter the names of the 3 files (JSON file, input file, result file(output.txt))");
         try (BufferedReader fileName = new BufferedReader(new InputStreamReader(System.in));
              BufferedReader jsonFile = new BufferedReader(new FileReader(fileName.readLine()));
              BufferedReader jinputFile = new BufferedReader(new FileReader(fileName.readLine()));
@@ -34,17 +34,31 @@ public class JSONSystem {
                     } else {
                         outputFile.write(obj + "\n");
                     }
+
                 } else if (line.startsWith("PUT")) {
                     arr = JSONSystem.splitElements(line);
                     Object obj = JSONSystem.put(arr);
-                    if (obj != null && obj.equals("ERROR")) {
-                        outputFile.write("PUT_ERROR" + "\n");
+                    if (obj != null && obj.equals("ERROR1")) {
+                        outputFile.write("PUT_ERROR_NOT_ARRAY" + "\n");
+                    } else if (obj != null && obj.equals("ERROR2")) {
+                        outputFile.write("PUT_ERROR_INDEX_OUT_OF_RANGE" + "\n");
+                    } else if (obj != null && (obj.equals("ERROR3") || obj.equals("ERROR"))) {
+                        outputFile.write("PUT_ERROR_NOT_OBJECT" + "\n");
+                    } else if (obj != null && obj.equals("ERROR4")) {
+                        outputFile.write("PUT_KEY_NOT_FOUND" + "\n");
                     }
+
                 } else if (line.startsWith("DEL")) {
                     arr = JSONSystem.splitElements(line);
                     Object obj = JSONSystem.del(arr);
-                    if (obj != null && obj.equals("ERROR")) {
-                        outputFile.write("DEL_ERROR" + "\n");
+                    if (obj != null && obj.equals("ERROR1")) {
+                        outputFile.write("DEL_ERROR_NOT_ARRAY" + "\n");
+                    } else if (obj != null && obj.equals("ERROR2")) {
+                        outputFile.write("DEL_ERROR_INDEX_OUT_OF_RANGE" + "\n");
+                    } else if (obj != null && (obj.equals("ERROR3") || obj.equals("ERROR"))) {
+                        outputFile.write("DEL_ERROR_NOT_OBJECT" + "\n");
+                    } else if (obj != null && obj.equals("ERROR4")) {
+                        outputFile.write("DEL_KEY_NOT_FOUND" + "\n");
                     }
                 }
             }
@@ -133,6 +147,15 @@ public class JSONSystem {
             }
             return ((JSONObject) result).put(key, value);
         }
+        if (result.equals("GET_ERROR_NOT_ARRAY")) {
+            return "ERROR1";
+        } else if (result.equals("GET_ERROR_INDEX_OUT_OF_RANGE")) {
+            return "ERROR2";
+        } else if (result.equals("GET_ERROR_NOT_OBJECT")) {
+            return "ERROR3";
+        } else if (result.toString().startsWith("GET_KEY_NOT_FOUND")) {
+            return "ERROR4";
+        }
         return "ERROR";
     }
 
@@ -145,6 +168,15 @@ public class JSONSystem {
         } else if (result instanceof JSONArray) {
             int key = Integer.parseInt(cmd[cmd.length - 1]);
             return ((JSONArray) result).remove(key);
+        }
+        if (result.equals("GET_ERROR_NOT_ARRAY")) {
+            return "ERROR1";
+        } else if (result.equals("GET_ERROR_INDEX_OUT_OF_RANGE")) {
+            return "ERROR2";
+        } else if (result.equals("GET_ERROR_NOT_OBJECT")) {
+            return "ERROR3";
+        } else if (result.toString().startsWith("GET_KEY_NOT_FOUND")) {
+            return "ERROR4";
         }
         return "ERROR";
     }
